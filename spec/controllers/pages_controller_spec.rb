@@ -7,6 +7,11 @@ describe PagesController do
       get 'home'
       response.should be_success
     end
+	
+	it "bon titre?" do
+		get 'home'
+		response.should_have_selector("title",:content =>"petit test")
+	end
   end
 
   describe "GET 'contact'" do
@@ -15,5 +20,13 @@ describe PagesController do
       response.should be_success
     end
   end
+  
+  describe "GET 'about'" do
+    it "should be successful" do
+      get 'about'
+      response.should be_success
+    end
+  end
 
-end
+
+  
