@@ -26,6 +26,8 @@ describe PagesController do
       get 'about'
       response.should be_success
     end
+	
+	
   end
 
 
