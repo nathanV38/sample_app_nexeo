@@ -46,6 +46,7 @@ class UsersController < ApplicationController
 
     respond_to do |format|
       if @user.save
+	    sign_in @user
         flash[:success] = "Bienvenue #{params[:user][:nom]}!"   #-> cf success ci dessous
         #format.html { redirect_to @user, notice:"test encard flash!"}
 		format.html { redirect_to @user}
