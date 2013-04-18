@@ -46,10 +46,13 @@ class UsersController < ApplicationController
 
     respond_to do |format|
       if @user.save
-        format.html { redirect_to @user, notice: 'User was successfully created.' }
+        flash[:success] = "Bienvenue #{params[:user][:nom]}!"   #-> cf success ci dessous
+        #format.html { redirect_to @user, notice:"test encard flash!"}
+		format.html { redirect_to @user}
         format.json { render json: @user, status: :created, location: @user }
       else
-        format.html { render action: "new" }
+	    @titre = "Inscription"
+        format.html { render action: "new"}
         format.json { render json: @user.errors, status: :unprocessable_entity }
       end
     end
