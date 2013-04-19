@@ -17,10 +17,19 @@
         <strong><h2><%= gravatar_for @user %>
         <%= @user.nom %></h2></strong>
       
+	  
+	<% unless @user.microposts.empty? %>
+        <table class="microposts" summary="Msgs de l'utilisateur">
+          <%= render @microposts %>
+        </table>
+        <%= will_paginate @microposts %>
+    <% end %>  
+	  
     </td>
     <td class="sidebar round">
       <strong>Nom</strong> <%= @user.nom %><br />
-      <strong>URL</strong>  <%= link_to user_path(@user), @user%>
+      <strong>URL</strong>  <%= link_to user_path(@user), @user%><br />
+	  <strong>Messages</strong> <%= @user.microposts.count %>
     </td>
   </tr>
 </table>

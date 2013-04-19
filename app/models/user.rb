@@ -3,7 +3,8 @@ require 'digest'
 class User < ActiveRecord::Base
   attr_accessor :password #attribut virtuel
   attr_accessible :nom, :email, :password, :password_confirmation
-
+  has_many :microposts
+  
   email_regex = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
 
   validates :nom,  :presence => true,
@@ -57,5 +58,10 @@ class User < ActiveRecord::Base
 
     def secure_hash(string)
       Digest::SHA2.hexdigest(string)
+    end
+	
+	def feed
+    # C'est un préliminaire. Cf. chapitre 12 pour l'implémentation complète.
+    Micropost.where("user_id = ?", id)
     end
 end

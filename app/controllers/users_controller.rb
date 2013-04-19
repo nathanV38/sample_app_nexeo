@@ -19,6 +19,7 @@ before_filter :admin_user,   :only => :destroy
   # GET /users/1.json
   def show
     @user = User.find(params[:id])
+	@microposts = @user.microposts.paginate(:page => params[:page])
 	@titre=@user.nom
 
     respond_to do |format|
@@ -96,9 +97,7 @@ before_filter :admin_user,   :only => :destroy
   end
   
   private
-  def authenticate
-      deny_access unless signed_in?
-  end
+  
   
   def correct_user
       @user = User.find(params[:id])
