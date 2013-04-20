@@ -1,5 +1,6 @@
 class MicropostsController < ApplicationController
-before_filter :authenticate
+before_filter :authenticate, :only => [:create, :destroy]
+before_filter :authorized_user, :only => :destroy
 
   # GET /microposts
   # GET /microposts.json
@@ -47,6 +48,7 @@ before_filter :authenticate
       flash[:success] = "Micropost created!"
       redirect_to root_path
     else
+      @feed_items = []
       render 'pages/home'
     end
   end
@@ -70,12 +72,19 @@ before_filter :authenticate
   # DELETE /microposts/1
   # DELETE /microposts/1.json
   def destroy
-    @micropost = Micropost.find(params[:id])
+    #@micropost = Micropost.find(params[:id])
     @micropost.destroy
+    redirect_back_or root_path
 
-    respond_to do |format|
-      format.html { redirect_to microposts_url }
-      format.json { head :no_content }
-    end
+    #respond_to do |format|
+    #  format.html { redirect_to microposts_url }
+     # format.json { head :no_content }
+    #end
   end
+end
+
+private
+def authorized_user
+      @micropost = Micropost.find(params[:id])
+      redirect_to root_path unless current_user?(@micropost.user)
 end

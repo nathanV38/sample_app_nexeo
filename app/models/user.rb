@@ -13,7 +13,7 @@ class User < ActiveRecord::Base
                     :format   => { :with => email_regex },
 					:uniqueness => { :case_sensitive => false }
 					
-  # Crée automatique l'attribut virtuel 'password_confirmation'.
+  # Crï¿½e automatique l'attribut virtuel 'password_confirmation'.
   validates :password, :presence     => true,
                        :confirmation => true,
                        :length       => { :within => 6..40 }
@@ -22,7 +22,7 @@ class User < ActiveRecord::Base
 
 	# Retour true (vrai) si le mot de passe correspond.
 	def has_password?(submitted_password)
-		# Compare encrypted_password avec la version cryptée de
+		# Compare encrypted_password avec la version cryptï¿½e de
 		# password_soumis.
 		encrypted_password == encrypt(submitted_password)
 	end
@@ -41,6 +41,11 @@ class User < ActiveRecord::Base
 	def signed_in?
 	 !current_user.nil?
 	end
+	
+	def feed
+    # C'est un preliminaire. Cf. chapitre 12 pour l'implï¿½mentation complï¿½te.
+    Micropost.where("user_id = ?", id)
+    end
   
 	private	
 	def encrypt_password
@@ -60,8 +65,5 @@ class User < ActiveRecord::Base
       Digest::SHA2.hexdigest(string)
     end
 	
-	def feed
-    # C'est un préliminaire. Cf. chapitre 12 pour l'implémentation complète.
-    Micropost.where("user_id = ?", id)
-    end
+	
 end
