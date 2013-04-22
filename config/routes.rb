@@ -1,10 +1,16 @@
 SampleApp::Application.routes.draw do
   #get "sessions/new"
+  resources :users do
+    member do
+      get :following, :followers
+    end
+  end
 
   resources :events
   resources :users
   resources :sessions, :only => [:new, :create, :destroy]
   resources :microposts, :only => [:create, :destroy]
+  resources :relationships, :only => [:create, :destroy]
 
   match '/calendar(/:year(/:month))' => 'calendar#index', :as => :calendar, :constraints => {:year => /\d{4}/, :month => /\d{1,2}/}
 

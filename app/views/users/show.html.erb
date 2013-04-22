@@ -14,8 +14,11 @@
   <tr>
     <td class="main">
       
-        <strong><h2><%= gravatar_for @user %>
-        <%= @user.nom %></h2></strong>
+        <strong><h2>
+        	<%= gravatar_for @user %>
+        	<%= @user.nom %>
+        </h2></strong>
+      <%= render 'follow_form' if signed_in? %>
       
 	  
 	<% unless @user.microposts.empty? %>
@@ -30,6 +33,7 @@
       <strong>Nom</strong> <%= @user.nom %><br />
       <strong>URL</strong>  <%= link_to user_path(@user), @user%><br />
 	  <strong>Messages</strong> <%= @user.microposts.count %>
+	  <%= render 'shared/stats' %>
     </td>
   </tr>
 </table>
